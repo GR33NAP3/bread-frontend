@@ -9,7 +9,8 @@ function New() {
         image:''
     })
     // const [glutenCheck, setGlutenCheck] = useState(true)
-
+    
+    //function for the change in name and image inputs
     const handleChange= (e) => {
         const value = e.target.value;
         setBreadInput({
@@ -17,6 +18,8 @@ function New() {
             [e.target.name]: value
         });
     }
+
+    // function for the gluten checkbox
     const handleGlutenCheck = (e) => {
         const checked = e.target.checked
         setBreadInput({
@@ -24,6 +27,8 @@ function New() {
             [e.target.name]: checked
         })
     }
+
+    //function for the submision on the form to add to the database
     const handleSubmit = async (e) => {
         e.preventDefault()
         const URL = `${process.env.REACT_APP_BACKEND_URI}/breads`
@@ -33,15 +38,14 @@ function New() {
             headers: {'Content-Type' : 'application/json'},
             body: JSON.stringify(breadInput)
         })
-        const data = await response.json()
-        console.log('response', data)
+        if (response.status !== 201) console.log('error') // add error handling later
         navigate('/')
     }
     
     return (
         <form onSubmit={handleSubmit}>
             <input onChange={handleChange} value={breadInput.name} name='name' placeholder="name" />
-            <input onChange={handleGlutenCheck} defaultChecked={breadInput.hasGluten} value={breadInput.hasGluten} type='checkbox' />
+            <input onChange={handleGlutenCheck} defaultChecked={breadInput.hasGluten} name="hasGluten" value={breadInput.hasGluten} type='checkbox' />
             <input onChange={handleChange} value={breadInput.image} name='image' placeholder="image" />
             <input type='submit' />
         </form>

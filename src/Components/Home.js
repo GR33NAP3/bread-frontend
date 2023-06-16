@@ -20,7 +20,7 @@ function Home() {
     return(
       <div key={bread._id}>
         <Link to={`/bread/${bread._id}`}>
-          <p>{bread.name}</p>
+          {bread.name}
         </Link>
       </div>
     )
